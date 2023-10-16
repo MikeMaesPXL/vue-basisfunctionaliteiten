@@ -4,10 +4,13 @@ export default {
     return {
       title: 'Dit is een titel',
       intro: 'Dit is een intro',
-      duck: 'DUCK.png',
       name: 'Mike Maes',
       age: '21',
-      webpage: 'https://vuejs.org/'
+      webpage: 'https://vuejs.org/',
+      showMe: false,
+      racoon: 'RACOON.jpg',
+      duck: 'DUCK.png',
+      buttonText: 'Change Picture'
     }
   },
 
@@ -19,13 +22,17 @@ export default {
       let randomNumber = Math.random(0, 1)
       return randomNumber < 0.5 ? 'Wij verkopen de beste producten...' : 'Wie zoekt die vindt!';
     },
-    ageUp() {
+    ageUp(getalYeet) {
       let age = 21
-      return age + 5
+      return age + getalYeet;
     },
     randomNumber() {
       let randomNumber = Math.random(0, 1)
-      return randomNumber
+      return randomNumber;
+    },
+    changePicture(racoon, buttonName) {
+      this.duck = racoon;
+      this.buttonText = `${buttonName}`
     }
   }
 }
@@ -35,16 +42,19 @@ export default {
   <h1>Welkom in de Vue App</h1>
   <h2>{{ title }}</h2>
   <p>{{ intro }}</p>
-  <img :src="'/assets/' + duck" alt="duck">
+  <img v-if="duck" v-on:click="showMe = true" :src="'/assets/' + duck" alt="duck">
+  <button v-if="showMe" v-on:click="showMe = false" >Verberg mij</button>
+  <button v-on:click="changePicture(racoon, 'Text Gewijzigd')">{{ buttonText }}</button>
   <h3>{{ textEvent().toUpperCase() }}</h3>
   <p>{{ dynamicValue() }}</p>
 
   <h2>{{ name }}</h2>
   <p>{{ age }}</p>
-  <p>{{ ageUp() }}</p>
+  <p>{{ ageUp(5) }}</p>
   <p>{{ randomNumber() }}</p>
   <a :href="webpage">Press this link</a>
-  <input type="text" :value="name">
+  <input @click="ageUp(1)" type="text" :value="name">
+
 </template>
 
 <style>
